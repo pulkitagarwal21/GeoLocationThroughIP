@@ -1,0 +1,47 @@
+
+
+<div class="content" role="main">
+     <h2>Show Location On The Basis Of IP</h2>
+     <div class="card-container">
+             <form (submit)="GetGeoIPDetails()">
+                     Get Geo Location Of IP for 
+                      <input [(ngModel)]="IpAddress" name="tweet" placeholder="Enter IP" autocomplete="off">
+                      <span>    <button type="submit">Get Location Detail</button></span>
+                   </form>
+                   <div class="content" *ngIf="InvalidIP">
+                         <span>  <h2>Please enter valid IP to get geo location details.</h2></span>
+                       </div>    
+                 
+           <div class="content" *ngIf="GeoLocationDetails">
+                 <span>  <h2>Find the Geo Location details of the IP  specified</h2></span>
+                 <table border="1">
+                         <tr  *ngFor="let KeyValuePair of GeoLocationDetails | keyvalue">
+                             <td><b>{{KeyValuePair.key}}</b></td>
+                             <td> 
+                                     <div *ngIf="isObject(KeyValuePair.value) then thenBlock else elseBlock"></div>
+                                     <ng-template #thenBlock > 
+                                             <table border="1">
+                                             <tr  *ngFor="let subKeyValuePair of KeyValuePair.value | keyvalue">
+                                                 <td><b>{{subKeyValuePair.key}}</b></td>
+                                                 <td> <div *ngIf="isObject(subKeyValuePair.value) then 
+                                                  thensubBlock else elsesubBlock"></div> 
+                                                  <ng-template #thensubBlock ></ng-template>    
+                                                  <ng-template #elsesubBlock >{{subKeyValuePair.value}}</ng-template> 
+                                                   
+                                                   </td>
+                                                 </tr>   
+                                          </table>
+                                     </ng-template>
+                                     <ng-template #elseBlock> {{KeyValuePair.value}}</ng-template>
+                                 
+                                
+                               </td>
+                             </tr>   
+                      </table>
+                
+           </div>
+               </div>
+         
+           
+
+</div>
